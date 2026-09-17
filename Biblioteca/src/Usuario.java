@@ -8,5 +8,9 @@ public abstract class Usuario {
         this.quantidadeEmprestada = 0;
     }
 
+    public String getNome() {
+        return nome;
+    }
+
     public abstract int getLimiteItens();
 }
