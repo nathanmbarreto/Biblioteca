@@ -7,8 +7,8 @@ public class Biblioteca {
     private final Usuario[] usuarios;
     private int totalUsuarios;
 
-    public Biblioteca(String nome, ItemBiblioteca[] item, int totalItens, Usuario[] usuarios, int totalUsuarios) {
-        if(nome == null || nome.isBlank()){
+    public Biblioteca(String nome) {
+        if (nome == null || nome.isBlank()) {
             throw new IllegalArgumentException("Biblioteca precisa ser nomeada");
         }
         this.nome = nome;
@@ -18,22 +18,23 @@ public class Biblioteca {
         this.totalUsuarios = 0;
     }
 
-    public void cadastrarItem(ItemBiblioteca novoItem){
-        if(novoItem == null){
+
+    public void cadastrarItem(ItemBiblioteca novoItem) {
+        if (novoItem == null) {
             throw new IllegalArgumentException("Item não pode ser null.");
         }
-        if(totalItens >= item.length){
+        if (totalItens >= item.length) {
             throw new IllegalStateException("Capacidade maxima atingida.");
         }
         item[totalItens] = novoItem;
         totalItens++;
     }
 
-    public void cadastrarUsuario(Usuario usuario){
-        if(usuario == null){
+    public void cadastrarUsuario(Usuario usuario) {
+        if (usuario == null) {
             throw new IllegalArgumentException("Usuario não pode ser null.");
         }
-        if(totalUsuarios >= usuarios.length){
+        if (totalUsuarios >= usuarios.length) {
             throw new IllegalStateException("Máximo de usuários permitidos.");
         }
         usuarios[totalUsuarios] = usuario;
@@ -49,28 +50,61 @@ public class Biblioteca {
         return null;
     }
 
-    public boolean emprestar(String codigoItem, Usuario usuario){
+    public boolean emprestar(String codigoItem, Usuario usuario) {
         ItemBiblioteca item = buscarItemPorCodigo(codigoItem);
 
-        if(item == null){
+        if (item == null) {
             System.out.println("ERRO! Item não encontrado: " + codigoItem);
+            return false;
         }
-        if(usuario == null){
-            System.out.println("ERRO! Usuario não encontrado: " + codigoItem);
+        if (usuario == null) {
+            System.out.println("ERRO! Usuário inválido.");
+            return false;
         }
 
-    item.marcarComoEmprestado();
-        System.out.println("Item "+item.getTitulo() + "emrprestado para: "+ usuario.getNome());
-        return true;
+        if (!usuario.podeEmprestar()) {
+            System.out.println("Usuário " + usuario.getNome() + " já atingiu o limite de empréstimos.");
+            return false;
+        }
+
+        if (item instanceof Emprestavel emprestavel) {
+            if (emprestavel.emprestar(usuario)) {
+                usuario.registrarEmprestimo();
+                return true;
+            }
+        }
+
+        System.out.println("Item \"" + item.getTitulo() + "\" não pode ser emprestado (consulta local).");
+        return false;
     }
 
 
-    public boolean devolver(String codigoItem){
+    public boolean devolver(String codigoItem, Usuario usuario) {
         ItemBiblioteca item = buscarItemPorCodigo(codigoItem);
 
-        item.marcarComoDisponive();
-        System.out.println(item.getTitulo() + "devolvido com sucesso.");
-        return true;
+        if (item == null) {
+            System.out.println("ERRO! Item não encontrado: " + codigoItem);
+            return false;
+        }
+
+        if (item instanceof Emprestavel emprestavel) {
+            if (emprestavel.devolver()) {
+                usuario.registrarDevolucao();
+                return true;
+            }
+        }
+
+        return false;
     }
+
+    public void listarAcervo() {
+        System.out.println("Itens cadastrados: (" + totalItens + ") itens");
+        for (int i = 0; i < totalItens; i++) {
+            ItemBiblioteca listarItem = item[i];
+            System.out.println(listarItem.getTitulo());
+        }
+
+    }
+
 
 }
