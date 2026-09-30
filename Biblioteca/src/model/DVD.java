@@ -1,3 +1,5 @@
+package model;
+
 public class DVD extends ItemBiblioteca implements Emprestavel {
     private Usuario emprestadoPara;
 

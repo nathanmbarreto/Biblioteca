@@ -1,3 +1,5 @@
+package model;
+
 public class Livro extends ItemBiblioteca implements Emprestavel {
 
     private final String autor;
