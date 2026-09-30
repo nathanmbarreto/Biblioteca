@@ -21,7 +21,7 @@ public class Livro extends ItemBiblioteca implements Emprestavel {
     @Override
     public boolean emprestar(Usuario usuario) {
         if (!isDisponivel()) {
-            System.out.println("Livro já emprestado");
+            System.out.println("Livro "+ getTitulo() + " já emprestado");
             return false;
         }
         marcarComoEmprestado();
