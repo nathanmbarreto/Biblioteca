@@ -1,5 +1,7 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import model.*;
+import service.Biblioteca;
+
+
 public class Main {
     public static void main(String[] args) {
 
@@ -35,10 +37,12 @@ public class Main {
         biblioteca.devolver("R001", jorge, 8);
 
 
-//
+
 //        System.out.println("--------------------- TESTE DVD---------------------");
-//        DVD cronicasDeNarnia= new DVD("D001", "As crônicas de Nárnia");
+//        model.DVD cronicasDeNarnia= new model.DVD("D001", "As crônicas de Nárnia");
 //        biblioteca.cadastrarItem(cronicasDeNarnia);
+//        biblioteca.emprestar("D001", jorge);
+//        biblioteca.devolver("D001", jorge, 5);
 
 
         System.out.println("--------------------- LISTAR ACERVO---------------------");

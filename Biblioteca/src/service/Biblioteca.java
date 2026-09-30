@@ -1,3 +1,10 @@
+package service;
+
+import config.Config;
+import model.Emprestavel;
+import model.ItemBiblioteca;
+import model.Usuario;
+
 public class Biblioteca {
     private final String nome;
 
@@ -9,7 +16,7 @@ public class Biblioteca {
 
     public Biblioteca(String nome) {
         if (nome == null || nome.isBlank()) {
-            throw new IllegalArgumentException("Biblioteca precisa ser nomeada");
+            throw new IllegalArgumentException("service.Biblioteca precisa ser nomeada");
         }
         this.nome = nome;
         this.item = new ItemBiblioteca[Config.CAPACIDADE_ITENS];
@@ -32,7 +39,7 @@ public class Biblioteca {
 
     public void cadastrarUsuario(Usuario usuario) {
         if (usuario == null) {
-            throw new IllegalArgumentException("Usuario não pode ser null.");
+            throw new IllegalArgumentException("model.ItemBiblioteca.Usuario não pode ser null.");
         }
         if (totalUsuarios >= usuarios.length) {
             throw new IllegalStateException("Máximo de usuários permitidos.");

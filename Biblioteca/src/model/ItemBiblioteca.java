@@ -1,3 +1,5 @@
+package model;
+
 public abstract class ItemBiblioteca {
     private final String codigo;
 
@@ -30,5 +32,6 @@ public abstract class ItemBiblioteca {
 
     public abstract int prazo();
     public abstract double multaCentavos();
+
 }
 
