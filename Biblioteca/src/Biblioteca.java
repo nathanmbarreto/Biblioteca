@@ -79,7 +79,7 @@ public class Biblioteca {
     }
 
 
-    public boolean devolver(String codigoItem, Usuario usuario) {
+    public boolean devolver(String codigoItem, Usuario usuario, int diasEmprestados) {
         ItemBiblioteca item = buscarItemPorCodigo(codigoItem);
 
         if (item == null) {
@@ -90,6 +90,11 @@ public class Biblioteca {
         if (item instanceof Emprestavel emprestavel) {
             if (emprestavel.devolver()) {
                 usuario.registrarDevolucao();
+                int prazo = emprestavel.getPrazoEmprestimoDias();
+                if(diasEmprestados > prazo){
+                    double multa = (diasEmprestados - prazo) * emprestavel.getMultaPorDia();
+                    System.out.println("Devolução em atraso. Total a pagar: R$ "+ String.format("%.2f", multa));
+                }
                 return true;
             }
         }
